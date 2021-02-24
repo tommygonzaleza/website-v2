@@ -30,22 +30,19 @@ walk(`${__dirname}/../data/blog/`, async function (err, files) {
         if (!doc) fail("Invalid Markdown syntax for " + _path);
         if (!doc.lang) fail("Missing language on .md file name for " + _path);
 
-
-        const hasRedirect = vercel.routes.find(r => r.source === "/"+doc.name);
-        if(!hasRedirect) vercel.routes.push({
-            "source": "/"+doc.name,
-            "destination": "/"+doc.lang+"/post/"+doc.name,
-            "statusCode": 301
+        const hasRedirect = vercel.redirects.find(r => r.source === "/" + doc.name);
+        if (!hasRedirect) vercel.redirects.push({
+            "source": "/" + doc.name,
+            "destination": "/" + doc.lang + "/post/" + doc.name,
         })
     }
 
+    const fileContent = JSON.stringify(vercel, null, 2);
     try{
-        fs.writeFileSync(vercelPath, JSON.stringify(vercel));
-        success("All redirects have been added to the now.json");
+        fs.writeFileSync(vercelPath, fileContent, 'utf8');
+        success("All redirects have been created")
     }
-    catch(e){
-        fail("Error writing redirects on vercel file: "+vercelPath);
-        console.error(e);
+    catch(err){
+        fail("Error writing redirects on vercel file: " + err);
     }
-
 });     

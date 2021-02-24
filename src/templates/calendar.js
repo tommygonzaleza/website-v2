@@ -93,7 +93,7 @@ const ListCard = ({image, title, date, address, link, slug, applyButtonLink, det
               fs_md="9px"
               fs_lg="11px"
               fs_xl="14px">
-              {slug.includes("ft") ? "Full Time" : "Part Time"}
+              {slug.includes("-ft") ? "Full Time" : "Part Time"}
             </Paragraph>
           </Row>}
           {applyButtonLink && detailsButtonLink && <Row justifyContent={`center`} display="flex">
@@ -287,7 +287,7 @@ const [backgroundSize, setBackgroundSize] = useState("100%");
                     image={event.banner}
                     link={event.url}
                     date={event.starting_at}
-                    exerpt={event.exerpt}
+                    exerpt={event.excerpt}
                     eventLink={event.url}
                     eventText={yml.button.event_register_button_link}
                     context={pageContext.lang}
